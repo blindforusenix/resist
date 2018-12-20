@@ -1,3 +1,11 @@
+"""
+As long as your tests are sensibly arranged, they won’t become unmanageable. Good rules-of-thumb include having:
+
+    a separate TestClass for each model or view
+    a separate test method for each set of conditions you want to test
+    test method names that describe their function
+"""
+
 from django.test import TestCase
 
 import datetime

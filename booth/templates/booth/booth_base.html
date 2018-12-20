@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<head>
+  <title>{{title}}</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="min-width=768, max-width:1024, max-height=1000, initial-scale=1, user-scalable=0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width">
+  <link rel="apple-touch-icon-precomposed" href="{% static 'booth/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'booth/style.css' %}" type="text/css" media="screen" />
+</head>
+<body
+    {% if request.user_agent.is_mobile %}
+      class="mobile"
+    {% endif %}
+    ontouchstart=""
+  >
+  <section id="header">
+  	<header class="container">
+  		<input id="button-settings" type="button" class="button icon settings open-settings" value="Settings" />
+  		<input id="button-help" type="button" class="button icon help open-help" value="Help" />
+  		<input id="button-review" type="button" class="button review" value="Review" />
+  	</header>
+  </section>
+
+
+  <section id="page">
+  	<article class="container">
+  		<div id="description">
+  			<h1><strong>Resist</strong></h1>
+  			<aside>
+  				Template's ready.
+  			</aside>
+  		</div>
+  	</article>
+  </section>
+
+  <section id="footer">
+  	<footer class="container">
+  		<input id="button-back" type="button" class="button icon back" value="Back" />
+  		<input id="button-cancel" type="button" class="button icon cancel" value="Cancel" />
+  		<input id="button-skip" type="button" class="button icon skip" value="Skip" />
+      <!--
+      <div id="progress">
+  			<p><strong><span id="progress-current"><?php echo ballot_current_race(); ?></span></strong> of <strong><span id="progress-total"><?php echo ballot_total_races(); ?></span></strong></p>
+  		</div>
+      -->
+  		<input id="button-next" type="button" class="button icon next green" value="Next" />
+  		<input id="button-accept" type="button" class="button icon accept green" value="Accept" />
+  		<input id="button-cast" type="button" class="button cast green" value="Cast your vote" />
+  		<input id="button-return-review" type="button" class="button icon return green" value="Return to review and cast your vote" />
+  	</footer>
+  </section>
