@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+"""
 # Register your models here.
 from .models import Question, Choice
 
@@ -18,3 +18,4 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ['question_text']
 
 admin.site.register(Question, QuestionAdmin)
+"""
