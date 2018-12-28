@@ -7,5 +7,5 @@ from django.utils import timezone
 
 # Create your views here.
 def index(request):
-    return render(request, 'booth/booth_base.html', {})
+    return render(request, 'booth/index.html', {})
     #context_object_name  = ''
