@@ -7,8 +7,8 @@
   <meta name="viewport" content="min-width=768, max-width:1024, max-height=1000, initial-scale=1, user-scalable=0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width">
-  <link rel="apple-touch-icon-precomposed" href="{% static 'registrar/style.css' %}" />
-  <link rel="stylesheet" href="{% static 'registrar/style.css' %}" type="text/css" media="screen" />
+  <link rel="apple-touch-icon-precomposed" href="{% static 'supervisor/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'supervisor/style.css' %}" type="text/css" media="screen" />
 </head>
 <body
   {% if request.user_agent.is_mobile %}
@@ -34,7 +34,7 @@
 
   <section id="footer">
   	<footer class="container">
-  		<input id="button-back" type="button" class="onscreen button icon back" value="Back"/>
+  		<input id="button-back" type="button" class="button icon back" value="Back"/>
   		<input id="button-cancel" type="button" class="button icon cancel" value="Cancel" />
   		<input id="button-skip" type="button" class="button icon skip" value="Skip" />
       <!--
@@ -42,6 +42,8 @@
   			<p><strong><span id="progress-current"><?php echo ballot_current_race(); ?></span></strong> of <strong><span id="progress-total"><?php echo ballot_total_races(); ?></span></strong></p>
   		</div>
       -->
+      {% block footer %}
+      {% endblock %}
   		<input id="button-next" type="button" class="button icon next green" value="Next" />
   		<input id="button-accept" type="button" class="button icon accept green" value="Accept" />
   		<input id="button-cast" type="button" class="button cast green" value="Cast your vote" />

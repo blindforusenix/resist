@@ -1,0 +1,32 @@
+{% extends 'supervisor/base.html' %}
+
+{% block content %}
+
+    <div id="description">
+      <h1><strong>Create Election</strong></h1>
+        <aside>
+          <form action="{% url 'supervisor:addelection' %}" method="post">
+            {% csrf_token %}
+            <div class="option">
+              <label for="election_name">Election Name: </label>
+                <input name="election_name" type="text">
+            </div>
+            <div class="option">
+              <label for="election_organization">Organization: </label>
+                <input name="election_organization" type="text">
+            </div>
+            <div class="option">
+              <label for="election_description">Description: </label>
+                <input name="election_description" type="text">
+            </div>
+            <div class="option">
+              <label for="email">Enter email for election support:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+        </aside>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <button id="button-cast" type="sumbit" class="onscreen button cast green" value="Create Election">Create Election</button>
+{% endblock %}

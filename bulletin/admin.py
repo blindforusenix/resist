@@ -2,7 +2,7 @@ from django.contrib import admin
 #The Nested Admin is used because Choice>Questions>Election inline will not work for multiple levels of inline with basic javascript.
 from nested_admin import NestedModelAdmin, NestedStackedInline, NestedTabularInline
 # Register your models here.
-from .models import Election, Voter, Trustee, Question, Choice
+from .models import Election, Voter, Trustee, Question, Choice, Registrar
 
 
 class ChoiceInline(NestedTabularInline):
@@ -15,12 +15,15 @@ class QuestionInline(NestedTabularInline):
     inlines = [ChoiceInline, ]
 
 class TrusteeInline(NestedTabularInline):
+    fieldsets = [
+        ('Trustee Name', {'fields':['name']}),
+        ('Trustee Email', {'fields':['email']}),
+    ]
     model = Trustee
     extra = 1
 
 class ElectionAdmin(NestedModelAdmin):
     fieldsets = [
-        ('Short Name', {'fields':['short_name']}),
         ('Name', {'fields':['name']}),
         ('Organization', {'fields':['organization']}),
         ('Description', {'fields':['description']}),
@@ -32,7 +35,7 @@ class ElectionAdmin(NestedModelAdmin):
         ('Help Email', {'fields':['help_email']}),
     ]
     inlines = [QuestionInline, TrusteeInline]
-    list_display = ('short_name', 'registration_starts_at', 'voting_starts_at', 'voting_ends_at', 'tallying_starts_at', 'result_released_at')
+    list_display = ('name','registration_starts_at', 'voting_starts_at', 'voting_ends_at', 'tallying_starts_at', 'result_released_at')
     list_filter = ['created_at']
 
 admin.site.register(Election, ElectionAdmin)
@@ -54,4 +57,4 @@ class RegistrarAdmin(NestedModelAdmin):
         ('Name', {'fields':['name']}),
         ('Email', {'fields':['email']}),
     ]
- admin.site.register(Registrar, RegistrarAdmin)
+admin.site.register(Registrar, RegistrarAdmin)

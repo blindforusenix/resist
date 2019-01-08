@@ -18,7 +18,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('booth.urls')),
-    path('registrar/', include('registrar.urls')),
+    path('supervisor/', include('supervisor.urls')),
     #path('polls/',include('polls.urls')),
     path('admin/', admin.site.urls),
     path('nested_admin/', include('nested_admin.urls')),

@@ -19,10 +19,10 @@ Masood
 
 class Election(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    short_name = models.CharField(max_length=100, unique=True)
-    name = models.CharField(max_length=250)
+    #short_name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=250, unique=True)
     organization = models.CharField(max_length=250)
-    description = models.TextField()
+    description = models.TextField(null = True)
     public_key = models.CharField(max_length=250)
     private_key = models.CharField(max_length=250)
     #List of accepted credentials
@@ -54,8 +54,8 @@ class Election(models.Model):
 
     # the hash of all voters (stored for large numbers)
     voters_hash = models.CharField(max_length=100, null=True)
-    encrypted_tally = JSONField()
-    result = JSONField()
+    encrypted_tally = JSONField(null=True)
+    result = JSONField(null=True)
     # help email
     help_email = models.EmailField(null=True)
 
