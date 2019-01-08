@@ -1,23 +1,24 @@
 from django.contrib import admin
-
+#The Nested Admin is used because Choice>Questions>Election inline will not work for multiple levels of inline with basic javascript.
+from nested_admin import NestedModelAdmin, NestedStackedInline, NestedTabularInline
 # Register your models here.
 from .models import Election, Voter, Trustee, Question, Choice
 
 
-class ChoiceInline(admin.TabularInline):
+class ChoiceInline(NestedTabularInline):
     model = Choice
     extra = 1
 
-class QuestionInline(admin.TabularInline):
+class QuestionInline(NestedTabularInline):
     model = Question
     extra = 1
-    inlines = [ChoiceInline]
+    inlines = [ChoiceInline, ]
 
-class TrusteeInline(admin.TabularInline):
+class TrusteeInline(NestedTabularInline):
     model = Trustee
     extra = 1
 
-class ElectionAdmin(admin.ModelAdmin):
+class ElectionAdmin(NestedModelAdmin):
     fieldsets = [
         ('Short Name', {'fields':['short_name']}),
         ('Name', {'fields':['name']}),
@@ -36,7 +37,7 @@ class ElectionAdmin(admin.ModelAdmin):
 
 admin.site.register(Election, ElectionAdmin)
 
-class VoterAdmin(admin.ModelAdmin):
+class VoterAdmin(NestedModelAdmin):
     fieldsets = [
         ('Name', {'fields':['voter_name']}),
         ('Email', {'fields':['voter_email']}),
@@ -47,3 +48,10 @@ class VoterAdmin(admin.ModelAdmin):
     search_fields = ['voter_name']
 
 admin.site.register(Voter, VoterAdmin)
+
+class RegistrarAdmin(NestedModelAdmin):
+    fieldsets = [
+        ('Name', {'fields':['name']}),
+        ('Email', {'fields':['email']}),
+    ]
+ admin.site.register(Registrar, RegistrarAdmin)

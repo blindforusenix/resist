@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     #'polls.apps.PollsConfig',
     'booth.apps.BoothConfig',
     'bulletin.apps.BulletinConfig',
+    'bulletin.apps.RegistrarConfig',
     #'supervisor.apps.SupervisorConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_user_agents',
+    'nested_admin',
 ]
 
 MIDDLEWARE = [
@@ -115,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-#TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Halifax'
 
 USE_I18N = True
 

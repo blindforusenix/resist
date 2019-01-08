@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 import datetime, logging, uuid, random, io
 from django.contrib.postgres.fields import JSONField, ArrayField
 from django.db.models.fields import BigIntegerField
-#import bleach
+import bleach
 
 """
 Stuff below this line is referencing python scripts taken from helios
@@ -133,6 +133,22 @@ class Trustee(models.Model):
 
     class Meta:
       unique_together = (('election', 'email'))
+
+class Registrar(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    secret = models.CharField(max_length = 100)
+
+    public_key = models.CharField(max_length=250)
+    private_key_hash = models.CharField(max_length=250)
+
+    # secret key
+    # if the secret key is present, this means
+    # Resist is playing the role of the registrar.
+    secret_key = models.CharField(max_length = 250)
+    #pok = models.CharField(max_length=250)
+
 
 class Voter(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
