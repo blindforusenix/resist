@@ -7,6 +7,9 @@ from Crypto.PublicKey import ElGamal
 from Crypto.Util.number import GCD
 from Crypto.Hash import SHA
 
+#Specifically for RSA Key generation
+from Crypto.PublicKey import RSA
+
 #for sending emails
 from django.core.mail import send_mail
 
@@ -17,14 +20,6 @@ import datetime, logging, uuid, random, io
 from django.contrib.postgres.fields import JSONField, ArrayField
 from django.db.models.fields import BigIntegerField
 import bleach
-
-"""
-Stuff below this line is referencing python scripts taken from helios
-Masood
-26 Dec, 2018
-"""
-#from supervisor.crypto import electionalgs, algs, utils
-#import utils as resistutils
 
 
 class Election(models.Model):
@@ -91,7 +86,7 @@ class CastVote(models.Model):
     cast_at = models.DateTimeField(auto_now_add=True)
     cast_ip = models.GenericIPAddressField(null=True)
 """
-    AuditedBallot was taken directly from Helios\
+    AuditedBallot was taken directly from Helios
 """
 class AuditedBallot(models.Model):
   """
@@ -142,35 +137,51 @@ class Trustee(models.Model):
     #decryption_proofs = ArrayField(models.CharField(max_length=250), null=True)
     def save(self, *args, **kwargs):
         key = ElGamal.generate(512, Random.new().read)
-        publicparams = {'p' : key.p, 'g' : key.g, 'y' : key.y}
+        publicparams = json.dumps({'p' : key.p, 'g' : key.g, 'y' : key.y})
         privateparams = {'x' : key.x}
-        self.trustee_private_key = json.dumps(privateparams)
+        message = "Hi " + self.name + ", You are a trustee. Your private key is " + json.dumps(privateparams)
         send_mail(
-            'Test',
-            'Here is the message.',
+            'Test Trustee Key',
+            message,
             'themasoodali@gmail.com',
-            ['themasoodali@gmail.com'],
+            [self.email, ],
             fail_silently=False,
         )
-        self.trustee_public_key = json.dumps(publicparams)
+        self.trustee_public_key = publicparams
         super(Trustee, self).save(*args, **kwargs)
 
 
 
-class Registrar(models.Model):
+class RegistrationTeller(models.Model):
+    election = models.ForeignKey(Election, on_delete=models.CASCADE)
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200)
     email = models.EmailField()
     secret = models.CharField(max_length = 100)
 
-    public_key = models.CharField(max_length=250)
-    private_key_hash = models.CharField(max_length=250)
+    registration_public_key = JSONField(null=True)
+    registration_private_key_hash = models.CharField(max_length=250)
 
     # secret key
     # if the secret key is present, this means
     # Resist is playing the role of the registrar.
     secret_key = models.CharField(max_length = 250)
     #pok = models.CharField(max_length=250)
+
+    def save(self, *args, **kwargs):
+        key = RSA.generate(2048)
+        publicparams = json.dumps({'n' : key.n, 'e' : key.e})
+        privateparams = json.dumps({'d' : key.d, 'p' : key.p, 'q' : key.q, 'u' : key.u})
+        message = "Hi " + self.name + ", You are a Registration Teller. Your private key is " + privateparams
+        send_mail(
+            'Test Registration Key',
+            message,
+            'themasoodali@gmail.com',
+            [self.email, ],
+            fail_silently=False,
+        )
+        self.registration_public_key = publicparams
+        super(RegistrationTeller, self).save(*args, **kwargs)
 
 
 class Voter(models.Model):
@@ -179,5 +190,28 @@ class Voter(models.Model):
     voter_email = models.CharField(max_length=250, null=False)
     alias = models.CharField(max_length=100, null=True)
     is_registered = models.BooleanField(default=False)
+    public_auth_key = JSONField(null=True)
+    public_desig_key = JSONField(null=True)
     auth_key_hash = models.CharField(max_length=250, null=True)
+    desig_key_hash = models.CharField(max_length=250, null=True)
+    #auth_for was initially intended to include the UUID's of the elections that the voter is registered for
     auth_for = JSONField(null=True)
+    def save(self, *args, **kwargs):
+        auth_key = RSA.generate(2048)
+        auth_publicparams = json.dumps({'n' : auth_key.n, 'e' : auth_key.e})
+        auth_privateparams = json.dumps({'d' : auth_key.d, 'p' : auth_key.p, 'q' : auth_key.q, 'u' : auth_key.u})
+        desig_key = RSA.generate(2048)
+        desig_publicparams = json.dumps({'n' : desig_key.n, 'e' : desig_key.e})
+        desig_privateparams = json.dumps({'d' : desig_key.d, 'p' : desig_key.p, 'q' : desig_key.q, 'u' : desig_key.u})
+        message = "Hi " + self.voter_name + ",\n You are a registered voter. \nYour authorization key is " + auth_privateparams + "\n Your designation key is " + desig_privateparams
+        send_mail(
+            'Test Registration Key',
+            message,
+            'themasoodali@gmail.com',
+            [self.voter_email, ],
+            fail_silently=False,
+        )
+        self.is_registered = True
+        self.public_auth_key = auth_publicparams
+        self.public_desig_key = desig_publicparams
+        super(Voter, self).save(*args, **kwargs)
