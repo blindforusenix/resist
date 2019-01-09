@@ -2,3 +2,6 @@ pyyaml
 ua-parser
 user-agents
 django-user-agents
+pycrypto
+django-nested_admin
+django-computed-property

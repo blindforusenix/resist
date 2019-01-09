@@ -25,6 +25,13 @@ SECRET_KEY = '9wa#^%xau^#n04a4c7pv!67n0#c0mv0&pt&u_!^oe_gmjz+#wq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'themasoodali@gmail.com'
+EMAIL_HOST_PASSWORD = 'nqrjbbvalkpqqzja'
+EMAIL_USE_TLS = True
+
 ALLOWED_HOSTS = []
 
 
