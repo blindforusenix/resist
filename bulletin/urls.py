@@ -19,5 +19,5 @@ from . import views
 
 app_name = 'bulletin'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.check, name='check'),
 ]

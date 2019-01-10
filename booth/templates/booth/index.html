@@ -5,23 +5,22 @@
   <div id="description">
     <h1><strong>Resist</strong></h1>
       <p>What do you want to do?</p>
-      <div id = "options" class = "scroll override" style = "height: auto;" />
-        <div class = "option">
+
+          <a href="{% url 'bulletin:check' %}">
           <div class = "description">
-            <a href="{% url 'bulletin:index' %}"><input id="button-bulletin" type="button" class="button" value="Check a Bulletin Board" /></a>
+            <input id="button-bulletin" type="button" class="button" value="Check a Bulletin Board" />
           </div>
-        </div>
-        <div class = "option">
+          </a>
+          <a href="{% url 'register:create' %}">
           <div class= "description">
-            <a href="{% url 'register:index' %}"><input id="button-register" type="button" class="button" value="Register for an Election" /></a>
+            <input id="button-register" type="button" class="button" value="Register for an Election" />
           </div>
-        </div>
-        <div class = "option">
+          </a>
+          <a href="#">
           <div class = "description">
-            <a href="{% url 'booth:elections' %}"<input id="button-ballot" type="button" class="button" value="Cast a Vote" />
+            <input id="button-ballot" type="button" class="button" value="Cast a Vote" />
           </div>
-        </div>
-      </div>
-  </div>
+          </a>
+    </div>
 
 {% endblock %}
