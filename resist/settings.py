@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #'polls.apps.PollsConfig',
     'booth.apps.BoothConfig',
     'bulletin.apps.BulletinConfig',
+    'register.apps.RegisterConfig',
     #'registrar.apps.RegistrarConfig',
     'supervisor.apps.SupervisorConfig',
     'django.contrib.admin',

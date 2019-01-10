@@ -9,6 +9,10 @@
   <meta name="viewport" content="width=device-width">
   <link rel="apple-touch-icon-precomposed" href="{% static 'booth/style.css' %}" />
   <link rel="stylesheet" href="{% static 'booth/style.css' %}" type="text/css" media="screen" />
+  {% block stylesheets %}
+  {% endblock %}
+  {% block scripts %}
+  {% endblock %} 
 </head>
 <body
   {% if request.user_agent.is_mobile %}
@@ -34,7 +38,7 @@
 
   <section id="footer">
   	<footer class="container">
-  		<input id="button-back" type="button" class="onscreen button icon back" value="Back"/>
+  		<input id="button-back" type="button" class="button icon back" value="Back"/>
   		<input id="button-cancel" type="button" class="button icon cancel" value="Cancel" />
   		<input id="button-skip" type="button" class="button icon skip" value="Skip" />
       <!--

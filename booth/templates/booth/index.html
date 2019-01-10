@@ -4,9 +4,24 @@
 
   <div id="description">
     <h1><strong>Resist</strong></h1>
-    <aside>
-      Template is ready.
-    </aside>
+      <p>What do you want to do?</p>
+      <div id = "options" class = "scroll override" style = "height: auto;" />
+        <div class = "option">
+          <div class = "description">
+            <a href="{% url 'bulletin:index' %}"><input id="button-bulletin" type="button" class="button" value="Check a Bulletin Board" /></a>
+          </div>
+        </div>
+        <div class = "option">
+          <div class= "description">
+            <a href="{% url 'register:index' %}"><input id="button-register" type="button" class="button" value="Register for an Election" /></a>
+          </div>
+        </div>
+        <div class = "option">
+          <div class = "description">
+            <a href="{% url 'booth:elections' %}"<input id="button-ballot" type="button" class="button" value="Cast a Vote" />
+          </div>
+        </div>
+      </div>
   </div>
 
 {% endblock %}
