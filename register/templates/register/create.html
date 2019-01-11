@@ -1,9 +1,15 @@
 {% extends 'register/base.html' %}
-
+{% block scripts %}
+  <script type="text/javascript">
+    election_data = {{election | safe}}
+  </script>
+{% endblock %}
 {% block content %}
 
   <div id="description">
     <h1><strong>Resist</strong></h1>
-    <h1>Register for an Election</h1>
+    <h2>Select an Election</h2>
+      <select id="select-election"></select>
   </div>
+
 {% endblock %}
